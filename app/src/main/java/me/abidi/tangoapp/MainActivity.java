@@ -21,17 +21,24 @@ import android.widget.VideoView;
 
 import java.net.URI;
 
+import me.abidi.tangoapp.tango.OvenMonitor;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String URL = "android.resource://me.abidi.Tangoapp/" + R.raw.bg;
     //public static final String URL = "http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_50mb.mp4";
+    private  OvenMonitor ovenMonitor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // test monitor
+        ovenMonitor = new OvenMonitor();
+        ovenMonitor.startMonitoring();
 
         /* ********************* Background Video *************************** */
 
