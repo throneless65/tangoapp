@@ -24,8 +24,8 @@ import rx.functions.Action1;
 public class Oven implements Device {
     private static final String TAG = Oven.class.getSimpleName();
     private  HomeApplianceModel applianceModel =  null;
-    private final ProgramModel selectedProgram;
-    private final ProgramService programService;
+    private  ProgramModel selectedProgram;
+    private  ProgramService programService;
 
     Oven(){
         ApplianceService applianceService = ApplianceService.create();
