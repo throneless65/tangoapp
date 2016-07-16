@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Tango app</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_selection">SelectionActivity</string>
+
+    <string name="speech_prompt">Tell me what to do :)</string>
+    <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
+    <string name="tap_on_mic">Tap on mic to speak</string>
+</resources>
+
+
+

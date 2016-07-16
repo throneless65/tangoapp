@@ -1,0 +1,1 @@
+include ':app', ':sdk-develop-debug', ':sdk-develop-release'
