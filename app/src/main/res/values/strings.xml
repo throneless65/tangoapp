@@ -10,6 +10,10 @@
     <string name="speech_prompt">Tell me what to do :)</string>
     <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
     <string name="tap_on_mic">Tap on mic to speak</string>
+
+    <string name="title_activity_row">RowActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
 
 
