@@ -2,7 +2,6 @@ package me.abidi.tangoapp.tango;
 
 import android.util.Log;
 
-//import com.home_connect.exampleapp.features.appliancedetail.ui.views.OvenOptionsView;
 import com.home_connect.sdk.constants.ProgramConstants;
 import com.home_connect.sdk.exceptions.HomeConnectException;
 import com.home_connect.sdk.internal.log.HCLog;
@@ -14,6 +13,8 @@ import com.home_connect.sdk.property.RxBinder;
 import com.home_connect.sdk.services.ApplianceService;
 import com.home_connect.sdk.services.ProgramService;
 
+import java.util.List;
+
 import rx.functions.Action1;
 
 /**
@@ -22,14 +23,24 @@ import rx.functions.Action1;
 
 public class Oven implements Device {
     private static final String TAG = Oven.class.getSimpleName();
-    private final HomeApplianceModel applianceModel;
+    private  HomeApplianceModel applianceModel =  null;
     private final ProgramModel selectedProgram;
     private final ProgramService programService;
 
     Oven(){
         ApplianceService applianceService = ApplianceService.create();
         applianceService.updateAppliances();
-        applianceModel = applianceService.findAppliance("BOSCH-HCS01OVN1-8A66AADD197275");
+        List<HomeApplianceModel> applianceModelList = applianceService.getAppliances();
+        for (HomeApplianceModel homeApplianceModel : applianceModelList) {
+            if (homeApplianceModel.getName().contains("Oven")) {
+                applianceModel = homeApplianceModel;
+                break;
+            }
+        }
+        if (applianceModel == null) {
+            Log.e(TAG, "Coulnd't find an oven");
+        }
+//        applianceModel = applianceService.findAppliance("BOSCH-HCS01OVN1-8A66AADD197275");
         // TODO
         selectedProgram = ProgramModel.create().key(ProgramConstants.Oven.PIZZA_SETTING.getProgramKey())
                 .option(
@@ -52,6 +63,10 @@ public class Oven implements Device {
     @Override
     public void Start() {
         Log.e(TAG, "Start Oven");
+        if (applianceModel == null) {
+            Log.e(TAG, "cannot start, null applicance");
+            return;
+        }
         RxBinder.bind(this,
                 programService.startProgram(applianceModel, selectedProgram).single(),
                 new Action1<Void>() {
@@ -80,6 +95,10 @@ public class Oven implements Device {
     @Override
     public void Stop() {
         Log.e(TAG, "Stop Oven");
+        if (applianceModel == null) {
+            Log.e(TAG, "cannot stop, null applicance");
+            return;
+        }
         RxBinder.bind(this,
                 programService.stopProgram(applianceModel).single(),
                 new Action1<Void>() {
