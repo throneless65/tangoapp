@@ -80,7 +80,10 @@ public class TextProcessor {
             "  ]\n" +
             "}";
 
+    // process one
     public void processText(final String text) {
+        // if then AAAA and BBBB then CCCC
+        // simple command
         if (TTTProcessor.isTTTText(text)) {
             new Thread(new Runnable() {
                 @Override
@@ -89,9 +92,33 @@ public class TextProcessor {
                     tttProcessor.processText(text);
                 }
             }).start();
+
         } else {
             new HttpGetTask().execute(text);
         }
+    }
+
+    /**
+     *
+     * @param text extract actions with one intent, such as "turn on the lgihts and musics"
+     * @return
+     */
+    public static List<String> extractActions(String text) throws JSONException{
+        ArrayList<String> actions = new ArrayList<>();
+        String routine  = parseJSON(text);
+        if (routine == null || routine.isEmpty()) return actions;
+        JSONObject responseObject = (JSONObject) new JSONTokener(
+                routine).nextValue();
+
+        // Extract value of "intents" key -- a List
+        JSONArray actionsArray = responseObject.getJSONArray("actions");
+
+        for (int idx = 0; idx < actionsArray.length(); idx++) {
+            // Get single intents data - a Map
+            JSONObject action = (JSONObject) actionsArray.get(idx);
+            actions.add(action.toString());
+        }
+        return actions;
     }
 
 
@@ -109,7 +136,11 @@ public class TextProcessor {
             lastConstructedRoutine = parseJSON(result);
             try {
                 if (lastConstructedRoutine != null) {
+                    Log.e("TextProcessor", lastConstructedRoutine);
                     Routine.createRoutine(lastConstructedRoutine).Activate();
+                } else {
+                    Log.e("TextProcessor", "didn't recognize a routine");
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -129,8 +160,8 @@ public class TextProcessor {
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-                        .url(url)
-                        .build();
+                    .url(url)
+                    .build();
             Response response = client.newCall(request).execute();
             ret = response.body().string();
             Log.e("LUIS", ret);
@@ -151,59 +182,59 @@ public class TextProcessor {
         Integer interval = null;
         try {
 //
-                // Get top-level JSON Object - a Map
-                JSONObject responseObject = (JSONObject) new JSONTokener(
-                        text).nextValue();
+            // Get top-level JSON Object - a Map
+            JSONObject responseObject = (JSONObject) new JSONTokener(
+                    text).nextValue();
 
-                // Extract value of "intents" key -- a List
-                JSONArray intentsArray = responseObject.getJSONArray(INTENTS_TAG);
+            // Extract value of "intents" key -- a List
+            JSONArray intentsArray = responseObject.getJSONArray(INTENTS_TAG);
 
-                // Iterate over earthquakes list
-                for (int idx = 0; idx < intentsArray.length(); idx++) {
+            // Iterate over earthquakes list
+            for (int idx = 0; idx < intentsArray.length(); idx++) {
 
-                    // Get single intents data - a Map
-                    JSONObject intent = (JSONObject) intentsArray.get(idx);
+                // Get single intents data - a Map
+                JSONObject intent = (JSONObject) intentsArray.get(idx);
 
-                    if (Double.parseDouble(intent.get(SCORE_TAG).toString()) > 0.5) {
-                        action = intent.get(INTENT_TAG).toString();
-                    }
+                if (Double.parseDouble(intent.get(SCORE_TAG).toString()) > 0.5) {
+                    action = intent.get(INTENT_TAG).toString();
+                }
 //                    intents.add( INTENT_TAG + ":"
 //                            + intent.get(INTENT_TAG) + ","
 //                            + SCORE_TAG +":"
 //                            + intent.get(SCORE_TAG));
+            }
+
+            // Extract value of "entities" key -- a List
+            JSONArray entitiesArray = responseObject.getJSONArray(ENTITIES_TAG);
+
+            // Iterate over earthquakes list
+            for (int idx = 0; idx < entitiesArray.length(); idx++) {
+
+                // Get single intents data - a Map
+                JSONObject entity = (JSONObject) entitiesArray.get(idx);
+
+                if (entity.get(ENTITY_TAG).toString().equals("builtin.datetime.time")) {
+                    interval = extractInterval(
+                            ((JSONObject)entity.get("resolution")).get("time").toString()
+                    );
+                    continue;
                 }
 
-                // Extract value of "entities" key -- a List
-                JSONArray entitiesArray = responseObject.getJSONArray(ENTITIES_TAG);
-
-                // Iterate over earthquakes list
-                for (int idx = 0; idx < entitiesArray.length(); idx++) {
-
-                    // Get single intents data - a Map
-                    JSONObject entity = (JSONObject) entitiesArray.get(idx);
-
-                    if (entity.get(ENTITY_TAG).toString().equals("builtin.datetime.time")) {
+                if (Double.parseDouble(entity.get(SCORE_TAG).toString()) > 0.5) {
+                    String type = entity.get(ENTITY_TAG).toString();
+                    if (type.equals("builtin.datetime.time")) {
                         interval = extractInterval(
                                 ((JSONObject)entity.get("resolution")).get("time").toString()
                         );
-                        continue;
+                    } else {
+                        entities.add(entity.get(ENTITY_TAG).toString());
                     }
-
-                    if (Double.parseDouble(entity.get(SCORE_TAG).toString()) > 0.5) {
-                        String type = entity.get(ENTITY_TAG).toString();
-                        if (type.equals("builtin.datetime.time")) {
-                            interval = extractInterval(
-                                    ((JSONObject)entity.get("resolution")).get("time").toString()
-                            );
-                        } else {
-                            entities.add(entity.get(ENTITY_TAG).toString());
-                        }
-                    }
+                }
 
 //                    entities.add(ENTITY_TAG + ":"
 //                            + entity.get(ENTITY_TAG));
-                }
-            } catch (JSONException e) {
+            }
+        } catch (JSONException e) {
         }
         if (action != null && !entities.isEmpty()) {
             return createRoutine(action, entities, interval);
@@ -255,28 +286,6 @@ public class TextProcessor {
         return 5000;
     }
 
-    /**
-     *
-     * @param text extract actions with one intent, such as "turn on the lgihts and musics"
-     * @return
-     */
-    public static List<String> extractActions(String text) throws JSONException{
-        ArrayList<String> actions = new ArrayList<>();
-        String routine  = parseJSON(text);
-        if (routine == null || routine.isEmpty()) return actions;
-        JSONObject responseObject = (JSONObject) new JSONTokener(
-                routine).nextValue();
-
-        // Extract value of "intents" key -- a List
-        JSONArray actionsArray = responseObject.getJSONArray("actions");
-
-        for (int idx = 0; idx < actionsArray.length(); idx++) {
-            // Get single intents data - a Map
-            JSONObject action = (JSONObject) actionsArray.get(idx);
-            actions.add(action.toString());
-        }
-        return actions;
-    }
 
 
 
