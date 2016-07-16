@@ -12,7 +12,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        android:textColor="@color/white"
+        android:textColor="@color/primary_text_default_material_light"
         android:textSize="26dp"
         android:textStyle="normal" />
 
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:src="@drawable/mic_icon" />
+            android:src="@drawable/mic_new_icon" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -52,6 +52,7 @@
         android:id="@+id/btnActivate"
         android:layout_below="@+id/txtSpeechInput"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp" />
+        android:layout_marginTop="100dp"
+        android:backgroundTint="@color/accent_material_dark" />
 
 </RelativeLayout>

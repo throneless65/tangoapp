@@ -96,7 +96,7 @@ public class SelectionActivity extends AppCompatActivity {
                             Log.e("Processing speech", result.get(0));
                             TextProcessor textProcessor = new TextProcessor();
 //                            textProcessor.processText(result.get(0));
-                            textProcessor.processText("Turn on the lights");
+                            textProcessor.processText(result.get(0));
                             Snackbar activatedSnackBar = Snackbar.make(view, "Command activated.", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null);
                             activatedSnackBar.show();
