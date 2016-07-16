@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Locale;
+
+import me.abidi.tangoapp.tango.TextProcessor;
 
 public class SelectionActivity extends AppCompatActivity {
 
@@ -77,7 +80,7 @@ public class SelectionActivity extends AppCompatActivity {
             case REQ_CODE_SPEECH_INPUT: {
                 if (resultCode == RESULT_OK && null != data) {
 
-                    ArrayList<String> result = data
+                    final ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     txtSpeechInput.setText(result.get(0));
                     btnActivate.setVisibility(View.VISIBLE);
@@ -90,6 +93,10 @@ public class SelectionActivity extends AppCompatActivity {
                             // processText(result.get(0))
                             // then show toast
                             //
+                            Log.e("Processing speech", result.get(0));
+                            TextProcessor textProcessor = new TextProcessor();
+//                            textProcessor.processText(result.get(0));
+                            textProcessor.processText("Turn on the lights");
                             Snackbar activatedSnackBar = Snackbar.make(view, "Command activated.", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null);
                             activatedSnackBar.show();
