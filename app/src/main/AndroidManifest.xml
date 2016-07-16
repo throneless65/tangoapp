@@ -37,15 +37,13 @@
             android:label="@string/title_activity_selection"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".RowActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_row"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/FullscreenTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.abidi.tangoapp.MainActivity" />
-        </activity>
+            android:name=".PhilippsHueActivity"
+            android:label="@string/title_activity_philipps_hue"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BoschOvenActivity"
+            android:label="@string/title_activity_bosch_oven"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

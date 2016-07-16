@@ -69,13 +69,26 @@ public class MainActivity extends AppCompatActivity
         });
 
         ovenRow = (TableRow) findViewById(R.id.bosh_oven);
+        lightRow = (TableRow) findViewById(R.id.philipps_hue);
+
         ovenRow.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
-                Log.e("Click ", "Row 1");
-                Intent rowIntent = new Intent(MainActivity.this, RowActivity.class);
+                Log.e("Click ", "Bosch Oven Row");
+                Intent rowIntent = new Intent(MainActivity.this, BoschOvenActivity.class);
+                startActivity(rowIntent);
+            }
+        });
+
+        lightRow.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                // TODO Auto-generated method stub
+                Log.e("Click ", "Philipps Hue Row");
+                Intent rowIntent = new Intent(MainActivity.this, PhilippsHueActivity.class);
                 startActivity(rowIntent);
             }
         });
