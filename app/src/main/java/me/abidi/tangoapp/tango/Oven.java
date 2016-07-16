@@ -2,7 +2,7 @@ package me.abidi.tangoapp.tango;
 
 import android.util.Log;
 
-import com.home_connect.exampleapp.features.appliancedetail.ui.views.OvenOptionsView;
+//import com.home_connect.exampleapp.features.appliancedetail.ui.views.OvenOptionsView;
 import com.home_connect.sdk.constants.ProgramConstants;
 import com.home_connect.sdk.exceptions.HomeConnectException;
 import com.home_connect.sdk.internal.log.HCLog;
