@@ -47,7 +47,7 @@ public class OvenMonitor {
           * Handle failure
           */
         if (applianceModel == null) {
-            Log.e("OvenMonitor", "appliance in snull");
+            Log.e("OvenMonitor", "appliance is null");
             return;
         }
         subscription = ApplianceService.create()

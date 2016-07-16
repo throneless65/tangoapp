@@ -22,7 +22,7 @@ public class TangoAppApplication extends Application {
                 .getInstance()
                 .setConfiguration(Configuration.create()
                         .setApplicationContext(this)
-                        .setApiKey("EA260D617947B10A5914214BBACE664C445C751CCA9DDCD5AD78AC3C217DBAC4")
+                        .setApiKey("2F075EAB752DCC92D1EBD7E3BE1397CA17BF8CFFB97D69432690C063613D00B2")
                         .setEnvironment(Environment.SIMULATOR)
                         .build());
         /*TESTINGSTART*/
