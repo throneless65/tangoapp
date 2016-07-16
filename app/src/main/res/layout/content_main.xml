@@ -30,4 +30,106 @@
 
         />
     -->
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:layout_marginTop="10dp">
+            <ImageButton
+                android:layout_height="96dp"
+                android:layout_width="96dp"
+                android:src="@drawable/bosh_oven"
+                android:id="@+id/applianceImage1" />
+            <TextView
+                android:text="Bosch HNG6764S6"
+                android:textAlignment="center"
+                android:textColor="@color/tangoRed"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:id="@+id/applianceName1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp">
+            <ImageButton
+                android:layout_height="96dp"
+                android:layout_width="96dp"
+                android:src="@drawable/siemens_fridge"
+                android:id="@+id/applianceImage2" />
+            <TextView
+                android:text="Siemens KG36NHI32"
+                android:textAlignment="center"
+                android:textColor="@color/tangoRed"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:id="@+id/applianceName2" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:layout_marginTop="10dp">
+            <ImageButton
+                android:layout_height="96dp"
+                android:layout_width="96dp"
+                android:src="@drawable/coffee_machine"
+                android:id="@+id/applianceImage3" />
+            <TextView
+                android:text="Siemens CT636LES6"
+                android:textAlignment="center"
+                android:textColor="@color/tangoRed"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:id="@+id/applianceName3" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp">
+            <ImageButton
+                android:layout_height="96dp"
+                android:layout_width="96dp"
+                android:src="@drawable/philipps_hue"
+                android:id="@+id/applianceImage4" />
+            <TextView
+                android:text="Philipps Hue"
+                android:textColor="@color/tangoRed"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:id="@+id/applianceName4" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:layout_marginTop="10dp">
+            <ImageButton
+                android:layout_height="96dp"
+                android:layout_width="96dp"
+                android:src="@drawable/amazon_echo"
+                android:id="@+id/applianceImage5" />
+            <TextView
+                android:text="Amazon Echo"
+                android:textColor="@color/tangoRed"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:id="@+id/applianceName5" />
+        </TableRow>
+    </TableLayout>
 </RelativeLayout>
