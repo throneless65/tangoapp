@@ -80,10 +80,18 @@ public class TextProcessor {
             "  ]\n" +
             "}";
 
-    public void processText(String text) {
-        // if then AAAA and BBBB then CCCC
-        // simple command
-        new HttpGetTask().execute(text);
+    public void processText(final String text) {
+        if (TTTProcessor.isTTTText(text)) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    TTTProcessor tttProcessor = new TTTProcessor();
+                    tttProcessor.processText(text);
+                }
+            }).start();
+        } else {
+            new HttpGetTask().execute(text);
+        }
     }
 
 
@@ -247,6 +255,28 @@ public class TextProcessor {
         return 5000;
     }
 
+    /**
+     *
+     * @param text extract actions with one intent, such as "turn on the lgihts and musics"
+     * @return
+     */
+    public static List<String> extractActions(String text) throws JSONException{
+        ArrayList<String> actions = new ArrayList<>();
+        String routine  = parseJSON(text);
+        if (routine == null || routine.isEmpty()) return actions;
+        JSONObject responseObject = (JSONObject) new JSONTokener(
+                routine).nextValue();
+
+        // Extract value of "intents" key -- a List
+        JSONArray actionsArray = responseObject.getJSONArray("actions");
+
+        for (int idx = 0; idx < actionsArray.length(); idx++) {
+            // Get single intents data - a Map
+            JSONObject action = (JSONObject) actionsArray.get(idx);
+            actions.add(action.toString());
+        }
+        return actions;
+    }
 
 
 
