@@ -46,9 +46,9 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-        // test monitor
-        ovenMonitor = new OvenMonitor();
-        ovenMonitor.startMonitoring();
+//        // test monitor
+//        ovenMonitor = new OvenMonitor();
+//        ovenMonitor.startMonitoring();
 
         /* ********************* Background Video *************************** */
 
