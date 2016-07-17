@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity
 
                 }
                 ovenMonitor.startMonitoring();
-                rowIntent.putExtra("DEVICE_NAME", "oven");
+                rowIntent.putExtra("DEVICE_NAME", "Bosch HNG6764S6");
                 startActivity(rowIntent);
             }
         });
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity
 
                 }
                 ovenMonitor.startMonitoring();
-                rowIntent.putExtra("DEVICE_NAME", "hue");
+                rowIntent.putExtra("DEVICE_NAME", "Philipps Hue");
                 startActivity(rowIntent);
             }
         });

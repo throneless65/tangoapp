@@ -31,7 +31,8 @@ public class MyRecyclerViewAdapter extends RecyclerView
             super(itemView);
             label = (TextView) itemView.findViewById(R.id.textView);
             dateTime = (TextView) itemView.findViewById(R.id.textView2);
-            actionTxtView = (TextView) itemView.findViewById(R.id.activateTxtView);
+            actionTxtView = (TextView) itemView.findViewById(R.id.textView3);
+
             actionTxtView.setOnClickListener(new View.OnClickListener() {
                                              @Override
                                              public void onClick(View view) {
@@ -77,8 +78,15 @@ public class MyRecyclerViewAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
+        Log.d("Data", mDataset.toString());
         holder.label.setText(mDataset.get(position).getmText1());
         holder.dateTime.setText(mDataset.get(position).getmText2());
+        holder.actionTxtView.setText(mDataset.get(position).getmText3());
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
     }
 
     public void addItem(DataObject dataObj, int index) {
@@ -93,6 +101,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
 
     @Override
     public int getItemCount() {
+        Log.e("Items size", String.valueOf(mDataset.size()));
         return mDataset.size();
     }
 

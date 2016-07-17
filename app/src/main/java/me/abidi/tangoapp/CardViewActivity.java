@@ -1,6 +1,7 @@
 package me.abidi.tangoapp;
 
 import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -64,17 +65,25 @@ public class CardViewActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position, View v) {
                 Log.i(LOG_TAG, " Clicked on Item " + position);
+                actionTxtView = (TextView) findViewById(R.id.textView3);
+                actionTxtView.setText("activated");
+                actionTxtView.setTextColor(Color.parseColor("#33cccc"));
+                Snackbar.make(v, "The action is activated.", Snackbar.LENGTH_LONG)
+               .setAction("Action", null).show();
             }
         });
     }
 
     private ArrayList<DataObject> getDataSet() {
+        String names[] = {"Turn on the lights when the oven door is open","Notify me when a child is near the open oven","Notify me if I don't take out my ready food"};
+
         ArrayList results = new ArrayList<DataObject>();
-        for (int index = 0; index < 20; index++) {
+        for (int index = 0; index < 3; index++) {
             Bundle extras = getIntent().getExtras();
             //{"device_name": { "action 1": { "title": "", "description": ""}}}
             DataObject obj = new DataObject(extras.getString("DEVICE_NAME") + index,
-                    "Secondary " + index);
+                    names[index], "activate");
+            Log.e("index", String.valueOf(index));
             results.add(index, obj);
         }
         return results;
