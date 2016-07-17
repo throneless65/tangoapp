@@ -62,6 +62,10 @@ public class Routine {
     private List<Pair<Command, Integer>> commandList = new ArrayList<>();
     private String Name;
 
+    final static String NAME_TAG = "name";
+    final static String ACTIONS_TAG = "actions";
+    final static String COMMAND_TAG = "command";
+    final static String TIME_TAG = "time";
 
 
     public void Activate(){
@@ -101,12 +105,6 @@ public class Routine {
     public void setname(final String name) {this.Name = name; }
 
     public static Routine createRoutine(String json) throws JSONException {
-//        json = testRoutine; // FIXME
-        final String NAME_TAG = "name";
-        final String ACTIONS_TAG = "actions";
-        final String COMMAND_TAG = "command";
-        final String TIME_TAG = "time";
-
         JSONObject jsonObject = (JSONObject) new JSONTokener(json).nextValue();
         String name = jsonObject.get(NAME_TAG).toString();
         Routine routine = new Routine();
@@ -122,12 +120,18 @@ public class Routine {
 
         }
 
-//        routine.addCommand(CommandFactory.setOptions("{\"deviceName\": \"Light\", \"activity\": \"Start\"," +
-//                " \"options\": {\"temperature\": 175}}").create());
-//        routine.addCommand(CommandFactory.setOptions("{\"deviceName\": \"Light\", \"activity\": \"Stop\"," +
-//                " \"options\": {\"temperature\": 175}}").create());
-//        routine.addCommand(CommandFactory.setOptions("{\"deviceName\": \"Light\", \"activity\": \"Start\"," +
-//                " \"options\": {\"temperature\": 175}}").create());
         return  routine;
+    }
+
+    public static Routine createRoutineFromAction(String json) throws JSONException {
+        Routine routine = new Routine();
+        JSONObject jsonObject = (JSONObject) new JSONTokener(json).nextValue();
+        JSONObject command = (JSONObject) jsonObject.get(COMMAND_TAG);
+        Integer time = Integer.parseInt(jsonObject.get(TIME_TAG).toString());
+        routine.addCommand(CommandFactory.setOptions(command.toString()).create(),
+                time);
+
+        Log.e(TAG, "constructed routine from action");
+        return routine;
     }
 }
