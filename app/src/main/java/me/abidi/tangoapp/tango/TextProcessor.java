@@ -80,10 +80,35 @@ public class TextProcessor {
             "  ]\n" +
             "}";
 
+    public static final String hackRoutine = "{\n"+
+            "\t\"name\": \"Baby Night\",\n"+
+            "\t\"actions\": [{\n"+
+            "\t\t\"command\": {\n"+
+            "\t\t\t\"deviceName\": \"Light\",\n"+
+            "\t\t\t\"activity\": \"Start\",\n"+
+            "\t\t\t\"options\": {\n"+
+            "\t\t\t\t\"color\": \"red\"\n"+
+            "\t\t\t}\n"+
+            "\t\t},\n"+
+            "\t\t\"time\": 0\n"+
+            "\t}, {\n"+
+            "\t\t\"command\": {\n"+
+            "\t\t\t\"deviceName\": \"Music\",\n"+
+            "\t\t\t\"activity\": \"Start\"\n"+
+            "\t\t},\n"+
+            "\t\t\"time\": 0\n"+
+            "\n"+
+            "\t}]\n"+
+            "}";
+
     // process one
     public void processText(final String text) {
         // if then AAAA and BBBB then CCCC
         // simple command
+        if (text.equalsIgnoreCase("tango let's make babies")){
+            startHack();
+            return;
+        }
         final String cleanedText = text.replace("tango", "");
         if (TTTProcessor.isTTTText(cleanedText)) {
             new Thread(new Runnable() {
@@ -97,6 +122,15 @@ public class TextProcessor {
         } else {
             new HttpGetTask().execute(cleanedText);
         }
+    }
+
+    void startHack(){
+        try {
+            Routine.createRoutine(hackRoutine).Activate();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**

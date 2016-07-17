@@ -28,6 +28,7 @@ import java.util.List;
 import me.abidi.tangoapp.tango.EventProcessor;
 import me.abidi.tangoapp.tango.FridgeMonitor;
 import me.abidi.tangoapp.tango.OvenMonitor;
+import me.abidi.tangoapp.tango.TextProcessor;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 

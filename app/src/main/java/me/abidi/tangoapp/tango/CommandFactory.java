@@ -44,7 +44,16 @@ public class CommandFactory {
         } else if (deviceName.equals("CoffeeMachine")) {
             device = new CoffeMachine();
         } else if (deviceName.equals("Light")) {
-            device = new LightHue();
+            String color = "";
+            if (options != null) {
+                try {
+                    JSONObject jsonObject = (JSONObject) new JSONTokener(options).nextValue();
+                    color =  jsonObject.get("color").toString();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            device = new LightHue(color);
         } else if (deviceName.equals("Fridge")) {
             device = new Fridge();
         } else if (deviceName.equals("UserNotification")) {
@@ -58,6 +67,8 @@ public class CommandFactory {
                 }
             }
             device = new UserNotification(message);
+        } else if (deviceName.equals("Music")) {
+            device = new Music();
         }
 
         if (device != null) {

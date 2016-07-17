@@ -21,6 +21,7 @@
     <string name="ok">OK</string>
     <string name="unknown_error">Unknown error</string>
     <string name="login_description">Press login to connect the App!\n Enter your credentials on the next screen.</string>
+    <string name="subscription_key">01f948e3ae20494b8a95b94c0f0b6b6b</string>
 
 
     >>>>>>> ff92a664c661bdcc4a2734eee989fca15a04ee2e

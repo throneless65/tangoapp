@@ -20,7 +20,11 @@ public class LightHue implements Device {
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
     private static final String NAME = "Hue";
+    private String color = "";
 
+    public LightHue(String color) {
+        this.color = color;
+    }
     @Override
     public void Stop() {
         Log.e(TAG, "Stop light");
@@ -28,7 +32,12 @@ public class LightHue implements Device {
         try {
             OkHttpClient client = new OkHttpClient();
 
-            RequestBody body = RequestBody.create(JSON, "{\"on\":false}");
+            RequestBody body;
+            if (color.equalsIgnoreCase("red")) {
+                body  = RequestBody.create(JSON, "{\"on\":true, \"sat\":254, \"bri\":254,\"hue\":10000}");
+            } else {
+                body  = RequestBody.create(JSON, "{\"on\":false}");
+            }
             Request request = new Request.Builder()
                     .url(STOP_URL)
                     .put(body)
