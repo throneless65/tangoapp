@@ -72,6 +72,7 @@ public class Fridge implements Device {
         String status = "";
         if (FridgeMonitor.words.toLowerCase().contains("milch")) {
             status = "Got milk!";
+            FridgeMonitor.fridgeDescription = status;
         } else {
             status = FridgeMonitor.fridgeDescription;
         }
