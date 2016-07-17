@@ -88,12 +88,37 @@ public class MainActivity extends AppCompatActivity
         });
 
         ovenRow = (TableRow) findViewById(R.id.bosh_oven);
+        lightRow = (TableRow) findViewById(R.id.philipps_hue);
+
         ovenRow.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
+                Log.e("Click ", "Bosch Oven Row");
+                Intent rowIntent = new Intent(MainActivity.this, CardViewActivity.class);
+                if (fridgeMonitor == null){
+                    fridgeMonitor = new FridgeMonitor(eventProcessor);
 
+                }
+                fridgeMonitor.startMonitoring();
+                if (ovenMonitor == null){
+                    ovenMonitor = new OvenMonitor(eventProcessor);
+
+                }
+                ovenMonitor.startMonitoring();
+                rowIntent.putExtra("DEVICE_NAME", "Bosch HNG6764S6");
+                startActivity(rowIntent);
+            }
+        });
+
+        lightRow.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                // TODO Auto-generated method stub
+                Log.e("Click ", "Philipps Hue Row");
+                Intent rowIntent = new Intent(MainActivity.this, CardViewActivity.class);
                 Log.e("Click ", "Row 1");
                 if (fridgeMonitor == null){
                     fridgeMonitor = new FridgeMonitor(eventProcessor, getContentResolver());
@@ -105,7 +130,7 @@ public class MainActivity extends AppCompatActivity
 
                 }
                 ovenMonitor.startMonitoring();
-                Intent rowIntent = new Intent(MainActivity.this, RowActivity.class);
+                rowIntent.putExtra("DEVICE_NAME", "Philipps Hue");
                 startActivity(rowIntent);
             }
         });

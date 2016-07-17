@@ -14,7 +14,8 @@
     <string name="title_activity_row">RowActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-
+    <string name="title_activity_philipps_hue">PhilippsHueActivity</string>
+    <string name="title_activity_bosch_oven">BoschOvenActivity</string>
     <string name="login">Login</string>
     <string name="error">Error</string>
     <string name="ok">OK</string>
@@ -23,7 +24,7 @@
     <string name="subscription_key">01f948e3ae20494b8a95b94c0f0b6b6b</string>
 
 
-
+    >>>>>>> ff92a664c661bdcc4a2734eee989fca15a04ee2e
 </resources>
 
 
