@@ -86,7 +86,8 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
                 Log.e("Click ", "Bosch Oven Row");
-                Intent rowIntent = new Intent(MainActivity.this, BoschOvenActivity.class);
+                Intent rowIntent = new Intent(MainActivity.this, CardViewActivity.class);
+                rowIntent.putExtra("DEVICE_NAME", "oven");
                 startActivity(rowIntent);
             }
         });
