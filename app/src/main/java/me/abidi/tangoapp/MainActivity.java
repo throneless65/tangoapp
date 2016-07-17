@@ -28,6 +28,7 @@ import java.util.List;
 import me.abidi.tangoapp.tango.EventProcessor;
 import me.abidi.tangoapp.tango.FridgeMonitor;
 import me.abidi.tangoapp.tango.OvenMonitor;
+import me.abidi.tangoapp.tango.TextProcessor;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
+
                 Log.e("Click ", "Row 1");
                 if (fridgeMonitor == null){
                     fridgeMonitor = new FridgeMonitor(eventProcessor);
