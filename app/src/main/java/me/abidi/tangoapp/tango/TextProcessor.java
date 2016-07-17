@@ -306,6 +306,8 @@ public class TextProcessor {
         deviceToEntity.put("light", "Light");
         deviceToEntity.put("oven", "Oven");
         deviceToEntity.put("coffeemachine", "CoffeeMachine");
+        deviceToEntity.put("fridge", "Fridge");
+        deviceToEntity.put("music", "Music");
     }
 
     public static String mapToDevice(String entity_type) {
