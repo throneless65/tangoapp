@@ -17,10 +17,13 @@ import com.home_connect.sdk.model.events.MonitorEventType;
 import com.home_connect.sdk.property.RxBinder;
 import com.home_connect.sdk.services.ApplianceService;
 import com.home_connect.sdk.services.ProgramService;
+import com.microsoft.projectoxford.vision.VisionServiceClient;
+import com.microsoft.projectoxford.vision.VisionServiceRestClient;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import me.abidi.tangoapp.R;
 import rx.Subscription;
 import rx.functions.Action1;
 
@@ -39,6 +42,7 @@ public class FridgeMonitor {
     private String imageKey = "";
     private String fridgeDescription = "";
     private EventProcessor eventProcessor = null;
+    private VisionServiceClient client;
 
     synchronized public String getFridgeDescription() {
         return fridgeDescription;
@@ -92,10 +96,14 @@ public class FridgeMonitor {
          *//*
           * Handle failure
           */
+        if (client==null){
+            client = new VisionServiceRestClient("fdfa");// FIXME:
+        }
         if (applianceModel == null) {
             Log.e(TAG, "fridge is null");
             return;
         }
+
         subscription = ApplianceService.create()
                 .monitor(applianceModel)
                 .subscribe(
