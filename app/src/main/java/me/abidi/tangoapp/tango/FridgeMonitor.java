@@ -30,7 +30,7 @@ import rx.functions.Action1;
  */
 
 public class FridgeMonitor {
-    private static final String TAG = Oven.class.getSimpleName();
+    private static final String TAG = FridgeMonitor.class.getSimpleName();
     private HomeApplianceModel applianceModel;
     private final ProgramService programService;
     private Subscription subscription;
@@ -92,6 +92,10 @@ public class FridgeMonitor {
          *//*
           * Handle failure
           */
+        if (applianceModel == null) {
+            Log.e(TAG, "fridge is null");
+            return;
+        }
         subscription = ApplianceService.create()
                 .monitor(applianceModel)
                 .subscribe(

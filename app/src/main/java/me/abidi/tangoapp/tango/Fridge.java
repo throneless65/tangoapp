@@ -67,7 +67,7 @@ public class Fridge implements Device {
 
     @Override
     public String Status() {
-        Log.e(TAG, "Status Oven");
+        Log.e(TAG, "Fridge Status");
         return null;
     }
 }
