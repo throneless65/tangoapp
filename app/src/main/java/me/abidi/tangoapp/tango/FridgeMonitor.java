@@ -137,6 +137,7 @@ public class FridgeMonitor {
                             }
                         }
                 );
+        Log.e("FridgeMonitorError", "Started Monitoring");
         //BSH.Common.Status.DoorState
     }
 

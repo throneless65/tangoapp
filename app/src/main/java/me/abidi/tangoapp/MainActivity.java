@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity
     //public static final String URL = "http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_50mb.mp4";
     private  OvenMonitor ovenMonitor;
     private FridgeMonitor fridgeMonitor;
-    private EventProcessor eventProcessor;
+    private EventProcessor eventProcessor = new EventProcessor();
     TableRow ovenRow;
     TableRow fridgeRow;
     TableRow coffeeMachineRow;
@@ -97,6 +97,12 @@ public class MainActivity extends AppCompatActivity
                     fridgeMonitor = new FridgeMonitor(eventProcessor);
 
                 }
+                fridgeMonitor.startMonitoring();
+                if (ovenMonitor == null){
+                    ovenMonitor = new OvenMonitor(eventProcessor);
+
+                }
+                ovenMonitor.startMonitoring();
                 Intent rowIntent = new Intent(MainActivity.this, RowActivity.class);
                 startActivity(rowIntent);
             }
@@ -169,6 +175,17 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (fridgeMonitor != null){
+            fridgeMonitor.startMonitoring();
+        }
+        if (ovenMonitor != null){
+            ovenMonitor.startMonitoring();
+        }
+    }
 
 
     /**

@@ -15,9 +15,21 @@ import java.util.HashMap;
 
 public class EventProcessor {
 
-    public final static String TurnLightWhenFridgeClosed = "{\n" +
-            "\t\"conditionName\": \"When fridge closed then turn the lights on\",\n" +
+    public final static String TurnLightOffWhenFridgeClosed = "{\n" +
+            "\t\"conditionName\": \"When fridge closed then turn the lights off\",\n" +
             "\t\"when\": \"FridgeClosed\",\n" +
+            "\t\"then\": {\n" +
+            "\t\t\"command\": {\n" +
+            "\t\t\t\"deviceName\": \"Light\",\n" +
+            "\t\t\t\"activity\": \"Stop\"\n" +
+            "\t\t},\n" +
+            "\t\t\"time\": 0\n" +
+            "\t}\n" +
+            "}";
+
+    public final static String TurnLightWhenOvenClosed = "{\n" +
+            "\t\"conditionName\": \"When fridge oven closed then turn the lights on\",\n" +
+            "\t\"when\": \"OvenClosed\",\n" +
             "\t\"then\": {\n" +
             "\t\t\"command\": {\n" +
             "\t\t\t\"deviceName\": \"Light\",\n" +
@@ -56,9 +68,10 @@ public class EventProcessor {
 
     public EventProcessor() {
         try {
-            registerCondition(TurnLightWhenFridgeClosed);
+            registerCondition(TurnLightOffWhenFridgeClosed);
             registerCondition(StopLightWhenNoBodyHome);
             registerCondition(WharMeWhenNoMilk);
+            registerCondition(TurnLightWhenOvenClosed);
         } catch (JSONException e) {
             e.printStackTrace();
         }
