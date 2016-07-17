@@ -21,6 +21,7 @@ public class Fridge implements Device {
     private HomeApplianceModel applianceModel =  null;
     private final ProgramModel selectedProgram;
     private final ProgramService programService;
+    private FridgeMonitor fridgeMonitor = null;
 
     Fridge(){
         ApplianceService applianceService = ApplianceService.create();
@@ -68,6 +69,13 @@ public class Fridge implements Device {
     @Override
     public String Status() {
         Log.e(TAG, "Fridge Status");
-        return null;
+        String status = "";
+        if (FridgeMonitor.words.toLowerCase().contains("milch")) {
+            status = "Got milk!";
+        } else {
+            status = FridgeMonitor.fridgeDescription;
+        }
+        Log.e(TAG, status);
+        return status;
     }
 }

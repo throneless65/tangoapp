@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity
 
                 Log.e("Click ", "Row 1");
                 if (fridgeMonitor == null){
-                    fridgeMonitor = new FridgeMonitor(eventProcessor);
+                    fridgeMonitor = new FridgeMonitor(eventProcessor, getContentResolver());
 
                 }
                 fridgeMonitor.startMonitoring();
