@@ -16,11 +16,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TableRow;
 
+import com.home_connect.sdk.internal.log.HCLog;
+import com.home_connect.sdk.model.HomeApplianceModel;
 import com.home_connect.sdk.property.RxBinder;
+import com.home_connect.sdk.services.ApplianceService;
 import com.home_connect.sdk.services.LoginService;
 
 
+import java.util.List;
+
+import me.abidi.tangoapp.tango.EventProcessor;
+import me.abidi.tangoapp.tango.FridgeMonitor;
 import me.abidi.tangoapp.tango.OvenMonitor;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 public class MainActivity extends AppCompatActivity
@@ -29,6 +37,8 @@ public class MainActivity extends AppCompatActivity
     public static final String URL = "android.resource://me.abidi.Tangoapp/" + R.raw.bg;
     //public static final String URL = "http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_50mb.mp4";
     private  OvenMonitor ovenMonitor;
+    private FridgeMonitor fridgeMonitor;
+    private EventProcessor eventProcessor = new EventProcessor();
     TableRow ovenRow;
     TableRow fridgeRow;
     TableRow coffeeMachineRow;
@@ -45,10 +55,8 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        onRefreshApplianceList();
 
-        // test monitor
-        ovenMonitor = new OvenMonitor();
-        ovenMonitor.startMonitoring();
 
         /* ********************* Background Video *************************** */
 
@@ -74,6 +82,7 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
+                //        // test monitor
             }
         });
 
@@ -87,6 +96,16 @@ public class MainActivity extends AppCompatActivity
                 // TODO Auto-generated method stub
                 Log.e("Click ", "Bosch Oven Row");
                 Intent rowIntent = new Intent(MainActivity.this, CardViewActivity.class);
+                if (fridgeMonitor == null){
+                    fridgeMonitor = new FridgeMonitor(eventProcessor);
+
+                }
+                fridgeMonitor.startMonitoring();
+                if (ovenMonitor == null){
+                    ovenMonitor = new OvenMonitor(eventProcessor);
+
+                }
+                ovenMonitor.startMonitoring();
                 rowIntent.putExtra("DEVICE_NAME", "oven");
                 startActivity(rowIntent);
             }
@@ -98,7 +117,19 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
                 Log.e("Click ", "Philipps Hue Row");
-                Intent rowIntent = new Intent(MainActivity.this, PhilippsHueActivity.class);
+                Intent rowIntent = new Intent(MainActivity.this, CardViewActivity.class);
+                Log.e("Click ", "Row 1");
+                if (fridgeMonitor == null){
+                    fridgeMonitor = new FridgeMonitor(eventProcessor);
+
+                }
+                fridgeMonitor.startMonitoring();
+                if (ovenMonitor == null){
+                    ovenMonitor = new OvenMonitor(eventProcessor);
+
+                }
+                ovenMonitor.startMonitoring();
+                rowIntent.putExtra("DEVICE_NAME", "hue");
                 startActivity(rowIntent);
             }
         });
@@ -171,6 +202,17 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (fridgeMonitor != null){
+            fridgeMonitor.startMonitoring();
+        }
+        if (ovenMonitor != null){
+            ovenMonitor.startMonitoring();
+        }
+    }
+
 
     /**
      * Necessary call to unbind the {@link RxBinder} to avoid memory leaks
@@ -179,5 +221,39 @@ public class MainActivity extends AppCompatActivity
     public void onPause() {
         super.onPause();
         RxBinder.unbind(this);
+    }
+
+    public void onRefreshApplianceList() {
+        ApplianceService applianceService = ApplianceService.create();
+
+        RxBinder.bind(this,
+                applianceService.updateAppliances(),
+                new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        // do nothing here
+                    }
+                },
+                new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        HCLog.d(throwable);
+                    }
+                });
+
+        RxBinder.bind(this,
+                applianceService.getAppliances().observe().observeOn(AndroidSchedulers.mainThread()),
+                new Action1<List<HomeApplianceModel>>() {
+                    @Override
+                    public void call(List<HomeApplianceModel> homeApplianceModels) {
+                        //presenter.updateApplianceList(homeApplianceModels);
+                    }
+                },
+                new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        HCLog.d(throwable);
+                    }
+                });
     }
 }

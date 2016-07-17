@@ -3,6 +3,7 @@ package me.abidi.tangoapp.tango;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 
 import com.home_connect.sdk.property.RxBinder;
@@ -39,9 +40,11 @@ public class LoginActivity extends BaseLoginActivity {
     @OnClick(R.id.loginBtn)
     public void onLoginClick(View v) {
         if (loginService.getAuthorized().get()) {
+            Log.e("LoginActivity", "Login on click");
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         } else {
+            Log.e("LoginActivity", "Authorization dialog");
             new AuthorizationDialogFragment().show(getSupportFragmentManager(), "");
         }
     }
@@ -66,8 +69,8 @@ public class LoginActivity extends BaseLoginActivity {
                     @Override
                     public void call(Boolean value) {
                         boolean wasLoggedIn = value != null && value;
-
                         if (wasLoggedIn)  {
+                            Log.e("LoginActivity", "resuming login");
                             showMainActivity();
                         }
                     }

@@ -84,17 +84,18 @@ public class TextProcessor {
     public void processText(final String text) {
         // if then AAAA and BBBB then CCCC
         // simple command
-        if (TTTProcessor.isTTTText(text)) {
+        final String cleanedText = text.replace("tango", "");
+        if (TTTProcessor.isTTTText(cleanedText)) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     TTTProcessor tttProcessor = new TTTProcessor();
-                    tttProcessor.processText(text);
+                    tttProcessor.processText(cleanedText);
                 }
             }).start();
 
         } else {
-            new HttpGetTask().execute(text);
+            new HttpGetTask().execute(cleanedText);
         }
     }
 

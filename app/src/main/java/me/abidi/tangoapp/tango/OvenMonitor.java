@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.home_connect.sdk.model.HomeApplianceModel;
 import com.home_connect.sdk.model.events.MonitorEvent;
+import com.home_connect.sdk.model.events.MonitorEventType;
 import com.home_connect.sdk.services.ApplianceService;
 import com.home_connect.sdk.services.ProgramService;
 
@@ -17,11 +18,16 @@ import rx.functions.Action1;
  * Created by zozulya on 16/07/16.
  */
 
-public class OvenMonitor {
-    private static final String TAG = Oven.class.getSimpleName();
+public class OvenMonitor {  private static final String TAG = Oven.class.getSimpleName();
     private HomeApplianceModel applianceModel;
     private final ProgramService programService;
     private Subscription subscription;
+    private EventProcessor eventProcessor;
+
+    public OvenMonitor(EventProcessor eventProcessor) {
+        this();
+        this.eventProcessor = eventProcessor;
+    }
 
     public OvenMonitor(){
         ApplianceService applianceService = ApplianceService.create();
@@ -40,16 +46,32 @@ public class OvenMonitor {
 
     }
 
+    private boolean doorShut(MonitorEvent event) {
+        //E/FridgeMonitor: STATUS
+        //E/FridgeMonitor: BSH.Common.EnumType.DoorState.Open
+        //E/FridgeMonitor: NULL
+        //E/FridgeMonitor: BSH.Common.Status.DoorState
+        if (event.type == MonitorEventType.STATUS
+                && event.data != null
+                && event.data.size() > 0
+                && event.data.get(0).value != null
+                && event.data.get(0).value.toString().equals("BSH.Common.Status.DoorState.Closed")) {
+            return true;
+        }
+        return false;
+    }
+
+    public static String NullorString(Object o) {
+        if (o == null) return "NULL";
+        return  o.toString();
+    }
+
     public void startMonitoring() {
         /*
          * The events are provided in a stream until unsubscribed
          *//*
           * Handle failure
           */
-        if (applianceModel == null) {
-            Log.e("OvenMonitor", "appliance is null");
-            return;
-        }
         subscription = ApplianceService.create()
                 .monitor(applianceModel)
                 .subscribe(
@@ -61,11 +83,20 @@ public class OvenMonitor {
                  *
                  */
                                 Log.e("OvenMonitor", monitorEvent.type.toString());
+                                if (monitorEvent.data == null) return;
                                 for (int i = 0; i < monitorEvent.data.size(); i++) {
-                                    Log.e("OvenMonitor", monitorEvent.data.get(i).value.toString());
-                                    Log.e("OvenMonitor", monitorEvent.data.get(i).description);
-                                    Log.e("OvenMonitor", monitorEvent.data.get(i).key);
+                                    Log.e("OvenMonitor", NullorString(monitorEvent.data.get(i).value));
+                                    Log.e("OvenMonitor", NullorString(monitorEvent.data.get(i).description));
+                                    Log.e("OvenMonitor", NullorString(monitorEvent.data.get(i).key));
 
+                                }
+                                if (doorShut(monitorEvent)) {
+                                    Log.e("OvenMonitor","DOOR IS SHUT");
+                                    if (eventProcessor != null) {
+                                        eventProcessor.processEvent("OvenClosed");
+                                    }
+
+                                    //takeAndProcessImage();
                                 }
                             }
                         },
@@ -74,10 +105,15 @@ public class OvenMonitor {
                             public void call(Throwable throwable) {
                 /*
                  * Handle failure
+                 *
                  */
+                                Log.e("OvenMonitorError", throwable.getMessage());
+
                             }
                         }
                 );
+        Log.e("OvenMonitorError", "Started Monitoring");
+
         //BSH.Common.Status.DoorState
     }
 

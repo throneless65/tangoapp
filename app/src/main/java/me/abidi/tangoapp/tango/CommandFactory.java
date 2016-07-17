@@ -45,6 +45,19 @@ public class CommandFactory {
             device = new CoffeMachine();
         } else if (deviceName.equals("Light")) {
             device = new LightHue();
+        } else if (deviceName.equals("Fridge")) {
+            device = new Fridge();
+        } else if (deviceName.equals("UserNotification")) {
+            String message = "";
+            if (options != null) {
+                try {
+                    JSONObject jsonObject = (JSONObject) new JSONTokener(options).nextValue();
+                    message =  jsonObject.get("message").toString();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            device = new UserNotification(message);
         }
 
         if (device != null) {
