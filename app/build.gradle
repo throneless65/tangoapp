@@ -53,4 +53,8 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'io.reactivex:rxandroid:1.1.0'
+    // from oxfor project
+    compile 'com.microsoft.projectoxford:vision:1.0.354'
+//    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile files('libs/gson-2.3.1.jar')
 }
