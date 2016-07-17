@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity
                 Log.e("Click ", "Bosch Oven Row");
                 Intent rowIntent = new Intent(MainActivity.this, CardViewActivity.class);
                 if (fridgeMonitor == null){
-                    fridgeMonitor = new FridgeMonitor(eventProcessor);
+                    fridgeMonitor = new FridgeMonitor(eventProcessor, getContentResolver());
 
                 }
                 fridgeMonitor.startMonitoring();
