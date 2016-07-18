@@ -55,4 +55,12 @@
         android:layout_marginTop="100dp"
         android:backgroundTint="@color/accent_material_dark" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewFridge"
+        android:layout_marginTop="41dp"
+        android:layout_below="@+id/txtSpeechInput"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

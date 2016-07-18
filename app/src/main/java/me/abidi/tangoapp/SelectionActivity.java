@@ -18,11 +18,13 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import me.abidi.tangoapp.tango.FridgeMonitor;
 import me.abidi.tangoapp.tango.TextProcessor;
 
 public class SelectionActivity extends AppCompatActivity {
 
     private TextView txtSpeechInput;
+    private TextView txtViewFridge;
     private ImageButton btnSpeak;
     private Button btnActivate;
     private final int REQ_CODE_SPEECH_INPUT = 100;
@@ -33,6 +35,7 @@ public class SelectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_selection);
 
         txtSpeechInput = (TextView) findViewById(R.id.txtSpeechInput);
+        //txtViewFridge = (TextView) findViewById(R.id.txtViewFridge);
         btnSpeak = (ImageButton) findViewById(R.id.btnSpeak);
         btnActivate = (Button) findViewById(R.id.btnActivate);
         btnActivate.setVisibility(View.INVISIBLE);
@@ -83,6 +86,7 @@ public class SelectionActivity extends AppCompatActivity {
                     final ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     txtSpeechInput.setText(result.get(0));
+
                     btnActivate.setVisibility(View.VISIBLE);
 
                     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -104,6 +108,8 @@ public class SelectionActivity extends AppCompatActivity {
                             if (activatedSnackBar.isShown()){
                                 btnActivate.setVisibility(View.INVISIBLE);
                             }
+
+                            //txtViewFridge.setText(FridgeMonitor.fridgeDescription);
                             //txtSpeechInput.setText("turning off the lights...");
                             //startActivity(intent);
                         }

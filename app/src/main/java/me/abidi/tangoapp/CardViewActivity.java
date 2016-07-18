@@ -75,7 +75,7 @@ public class CardViewActivity extends AppCompatActivity {
     }
 
     private ArrayList<DataObject> getDataSet() {
-        String names[] = {"Turn on the lights when the oven door is open","Notify me when a child is near the open oven","Notify me if I don't take out my ready food"};
+        String names[] = {"Turn on the lights when the oven door is closed","Notify me when a child is near the open oven","Notify me if I don't take out my ready food"};
 
         ArrayList results = new ArrayList<DataObject>();
         for (int index = 0; index < 3; index++) {
